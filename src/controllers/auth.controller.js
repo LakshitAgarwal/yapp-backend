@@ -1,6 +1,7 @@
 const generateToken = require("../lib/utils");
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
+const cloudinary = require("../lib/cloudinary");
 
 const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -98,11 +99,43 @@ const logout = (req, res) => {
   }
 };
 
-const updateProfile = () => {};
+const updateProfile = async (req, res) => {
+  try {
+    const { profilePic } = req.body;
+    const userId = req.user._id;
+
+    if (!profilePic) {
+      res.status(400).json({ message: "Profile pic is required." });
+    }
+
+    const cloudinaryUpload = await cloudinary.uploader.upload(profilePic);
+
+    const updatedUser = User.findOneAndUpdate(
+      userId,
+      { profilePic: cloudinaryUpload.secure_url }, //cloudinary stores image as secure_url
+      { new: true }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
+const checkAuth = (req, res) => {
+  try {
+    res.status(200).json(req.user); // from protectedRoute middleware *REMEBERRRRRRR*.
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
 
 module.exports = {
   signup,
   login,
   logout,
   updateProfile,
+  checkAuth,
 };
