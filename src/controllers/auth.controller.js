@@ -84,14 +84,18 @@ const login = async (req, res) => {
 
 const logout = (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: "0" });
+    res.clearCookie("jwt", "", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV !== "development",
+      path: "/", // crucial!
+    });
     /**
      * in todo app we just had the jwt stored in chome's local storage
      * so in logout logic we just cleared that.
      * here bcoz jwt is stored as cookies
      * so to logout we are just clearing the cookies.
      */
-
     res.status(200).json({ message: "Logged Out Successfully" });
   } catch (error) {
     console.log(error);
