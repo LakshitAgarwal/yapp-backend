@@ -114,7 +114,7 @@ const updateProfile = async (req, res) => {
 
     const cloudinaryUpload = await cloudinary.uploader.upload(profilePic);
 
-    const updatedUser = User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       userId,
       { profilePic: cloudinaryUpload.secure_url }, //cloudinary stores image as secure_url
       { new: true }
