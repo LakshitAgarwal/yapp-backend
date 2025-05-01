@@ -5,10 +5,9 @@ const dotenv = require("dotenv");
 const connectDB = require("./lib/db");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const { app, server } = require("./lib/socket");
 
 dotenv.config();
-
-const app = express();
 
 app.use(express.json({ limit: "5mb" }));
 app.use(cookieParser());
@@ -22,7 +21,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log("Server is running on port " + process.env.PORT);
   connectDB();
 });
