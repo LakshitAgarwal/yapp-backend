@@ -10,10 +10,10 @@ const generateToken = (userId, res) => {
   //now after generating the token we will store this token in cookies in out browser
   res.cookie("jwt", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000, // MS
-    httponly: true, // prevent XSS attacks cross-site scripting attacks
-    sameSite: "strict", // CSRF attacks cross-site request forgery attacks
-    secure: process.env.NODE_ENV != "development",
-    path:"/"
+    httpOnly: true, // prevent XSS attacks
+    sameSite: process.env.NODE_ENV === "development" ? "lax" : "none", // Use "none" for cross-site in production
+    secure: process.env.NODE_ENV !== "development", // Must be true when sameSite is "none"
+    path: "/",
   });
 
   /**
