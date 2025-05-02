@@ -14,6 +14,7 @@ const generateToken = (userId, res) => {
     sameSite: process.env.NODE_ENV === "development" ? "lax" : "none", // Use "none" for cross-site in production
     secure: process.env.NODE_ENV !== "development", // Must be true when sameSite is "none"
     path: "/",
+    domain: "https://yapp-backend-1j8w.onrender.com"
   });
 
   /**

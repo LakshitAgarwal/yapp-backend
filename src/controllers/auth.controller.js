@@ -89,6 +89,7 @@ const logout = (req, res) => {
       sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
       secure: process.env.NODE_ENV !== "development",
       path: "/", // crucial!
+      domain: "https://yapp-backend-1j8w.onrender.com",
     });
     /**
      * in todo app we just had the jwt stored in chome's local storage
