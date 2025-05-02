@@ -86,8 +86,8 @@ const logout = (req, res) => {
   try {
     res.clearCookie("jwt", {
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
-      secure: process.env.NODE_ENV !== "development",
+      sameSite: "none",
+      secure: true,
       path: "/", // crucial!
     });
     /**

@@ -11,8 +11,8 @@ const generateToken = (userId, res) => {
   res.cookie("jwt", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000, // MS
     httpOnly: true, // prevent XSS attacks
-    sameSite: process.env.NODE_ENV === "development" ? "lax" : "none", // Use "none" for cross-site in production
-    secure: process.env.NODE_ENV !== "development", // Must be true when sameSite is "none"
+    sameSite: "none", // Use "none" for cross-site in production
+    secure: true, // Must be true when sameSite is "none"
     path: "/",
   });
 
