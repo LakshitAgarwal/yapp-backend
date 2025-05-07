@@ -21,6 +21,11 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
+
 server.listen(process.env.PORT, '0.0.0.0', () => {
   console.log("Server is running on port " + process.env.PORT);
   connectDB();
